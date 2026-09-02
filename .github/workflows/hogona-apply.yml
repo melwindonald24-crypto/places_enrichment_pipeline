@@ -24,11 +24,11 @@ jobs:
           test "$(git log -1 --pretty=%s)" = "hogona: submit researched batch"
       - name: Apply researched batch
         run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
-      - name: Persist canonical state
+      - name: Persist canonical state and clear handoff
         run: |
           git config user.name 'hogona-worker'
           git config user.email 'hogona-worker@users.noreply.github.com'
           git add data/hogona_worker_canonical_state.sql.gz.b64
-          git rm -f worker/response.json
+          git rm -f worker/response.json worker/request.json
           git commit -m 'chore: persist Hogona batch results'
           git push
