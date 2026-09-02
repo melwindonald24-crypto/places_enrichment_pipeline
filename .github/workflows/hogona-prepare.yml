@@ -1,0 +1,35 @@
+name: Hogona Prepare Batch
+
+on:
+  schedule:
+    - cron: '5 * * * *'
+  push:
+    paths:
+      - 'worker/bridge.py'
+  workflow_dispatch:
+
+concurrency:
+  group: hogona-prepare
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare exactly one batch
+        run: HOGONA_BRIDGE_MODE=prepare python worker/bridge.py
+      - name: Publish request
+        run: |
+          if [ -f worker/request.json ]; then
+            git config user.name 'hogona-worker'
+            git config user.email 'hogona-worker@users.noreply.github.com'
+            git add worker/request.json
+            if ! git diff --cached --quiet; then
+              git commit -m 'chore: publish Hogona batch request'
+              git push
+            fi
+          fi
