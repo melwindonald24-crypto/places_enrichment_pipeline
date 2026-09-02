@@ -15,6 +15,7 @@ permissions:
 
 jobs:
   apply:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'hogona: submit researched batch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
