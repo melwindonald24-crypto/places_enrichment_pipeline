@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - 'worker/bridge.py'
+      - 'worker/worker.py'
   workflow_dispatch:
 
 concurrency:
