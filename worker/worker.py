@@ -3,7 +3,7 @@ import base64, gzip, json, os, sqlite3, sys
 DB='hogona_worker.sqlite'
 STATE='data/hogona_worker_canonical_state.sql.gz.b64'
 
-CORE='''You are the Hogona enrichment worker. Process only the supplied job. Research factual/narrative fields with web search and never guess. If reliable evidence is unavailable, use null. Check place identity and geographic consistency; never silently accept a wrong classification. Preserve supplied coordinates exactly. Normal tourist output requires traversability exactly easy|moderate|difficult, a positive integer visit_duration_minutes, exact job_id, and no confidence field. Clearly non-tourist/restricted/private/administrative places use difficult, duration 0, narrative fields null, sources [] unless another populated field requires a source. Every populated narrative field must be supported by sources. Sources in the research result must be full URLs; before persistence they are normalized to lowercase hostname tokens with protocol, www, path, query, fragment and trailing slash removed, then every literal dot replaced with (dot), deduplicated. Return exactly one JSON object with job_id, place_fields, planning_attributes, sources. Do not add fields. The durable state is the GitHub artifact data/hogona_worker_canonical_state.sql.gz.b64; local hogona_worker.sqlite files are disposable. This worker never uses an OpenAI API key.'''
+CORE='''You are the Hogona enrichment worker. Process only the supplied job from exactly one selected batch. Research thoroughly before writing anything. Verify place identity and geographic consistency first. Use authoritative government and tourism sources first, then reputable secondary sources where needed. Research every factual or narrative field that can be supported; cross-check access, restrictions, history, height/elevation, safety, seasonal guidance, and local-name claims when relevant. Never guess. If reliable evidence is unavailable, use null. If credible sources disagree, preserve the disagreement explicitly rather than silently choosing a value. Preserve supplied coordinates exactly. Normal tourist output requires traversability exactly easy|moderate|difficult, a positive integer visit_duration_minutes, exact job_id, and no confidence field. Clearly non-tourist/restricted/private/administrative places use difficult, duration 0, narrative fields null, sources [] unless another populated field requires a source. Every populated narrative field must be supported by sources. Sources in the research result must be full URLs; before persistence they are normalized to lowercase hostname tokens with protocol, www, path, query, fragment and trailing slash removed, then every literal dot replaced with (dot), deduplicated. Build the logical result first and validate it completely before persistence. Return exactly one JSON object with job_id, place_fields, planning_attributes, sources. Do not add fields. The durable state is the GitHub artifact data/hogona_worker_canonical_state.sql.gz.b64; local hogona_worker.sqlite files are disposable. This worker never uses an OpenAI API key.'''
 
 OUTPUT_KEYS={'job_id','place_fields','planning_attributes','sources'}
 PF_KEYS={'traversability','micro_region','vibe','summary','best_time','visit_duration_minutes','co_ords'}
@@ -22,7 +22,7 @@ def decode_state():
 def encode_state(con):
     con.commit()
     dump='\n'.join(con.iterdump())+'\n'
-    data=base64.b64encode(gzip.compress(dump.encode(),9))
+    data=base64.b64encode(gzip.compress(dump.encode(),9,mtime=0))
     tmp=STATE+'.tmp'; open(tmp,'wb').write(data); os.replace(tmp,STATE)
 
 
@@ -80,8 +80,7 @@ def apply_researched_result(con, jid, inp, result):
 
 
 def select_one_batch(con):
-    # EXACTLY ONE batch-selection query for this run.
-    return con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status='exported') ORDER BY batch_id LIMIT 1").fetchone()
+    return con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status IN ('exported','processing')) ORDER BY batch_id LIMIT 1").fetchone()
 
 
 def claim_job(con,jid):
