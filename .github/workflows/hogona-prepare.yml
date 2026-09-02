@@ -7,6 +7,8 @@ on:
     paths:
       - 'worker/bridge.py'
       - 'worker/worker.py'
+      - 'worker/request.json'
+      - 'worker/response.json'
   workflow_dispatch:
 
 concurrency:
