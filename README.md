@@ -4,7 +4,7 @@ Durable deterministic enrichment state and validation contract.
 
 ## Durable state
 
-The authoritative SQLite state is stored as a compressed, base64-encoded SQLite SQL dump in `data/hogona_worker.sql.gz.b64`. The repository is the durable source of truth; local runner files are disposable.
+The authoritative SQLite state is stored as a compressed, base64-encoded SQLite SQL dump in `data/hogona_worker_canonical_state.sql.gz.b64`. The repository is the durable source of truth; local `hogona_worker.sqlite` runner files are disposable.
 
 ## Execution model
 
@@ -30,4 +30,4 @@ The checked-in state is the validated Hogona gold state currently containing 225
 
 ## CI
 
-`tests/test_worker.py` validates the checked-in SQLite state.
+`tests/test_worker.py` reconstructs a temporary SQLite database from the checked-in canonical artifact, then validates the gold-state counts and every completed worker result against the strict schema contract. It never relies on a pre-existing local database.
