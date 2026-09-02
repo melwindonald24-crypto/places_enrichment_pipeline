@@ -11,6 +11,8 @@ REQUEST = ROOT / "worker" / "request.json"
 RESPONSE = ROOT / "worker" / "response.json"
 DB = ROOT / "hogona_worker.sqlite"
 
+# GitHub is the durable state; request/response are the narrow research handoff.
+
 
 def connect_state():
     sql = gzip.decompress(base64.b64decode(STATE.read_bytes(), validate=True)).decode("utf-8")
