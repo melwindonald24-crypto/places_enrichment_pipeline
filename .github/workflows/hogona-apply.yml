@@ -1,0 +1,34 @@
+name: Hogona Apply Research
+
+on:
+  push:
+    paths:
+      - 'worker/response.json'
+  workflow_dispatch:
+
+concurrency:
+  group: hogona-apply
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require researched submission
+        run: |
+          test -f worker/response.json
+          test "$(git log -1 --pretty=%s)" = "hogona: submit researched batch"
+      - name: Apply researched batch
+        run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
+      - name: Persist canonical state
+        run: |
+          git config user.name 'hogona-worker'
+          git config user.email 'hogona-worker@users.noreply.github.com'
+          git add data/hogona_worker_canonical_state.sql.gz.b64
+          git rm -f worker/response.json
+          git commit -m 'chore: persist Hogona batch results'
+          git push
