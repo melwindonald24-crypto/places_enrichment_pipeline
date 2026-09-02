@@ -11,7 +11,7 @@ REQUEST = ROOT / "worker" / "request.json"
 RESPONSE = ROOT / "worker" / "response.json"
 DB = ROOT / "hogona_worker.sqlite"
 
-# GitHub is the durable state; request/response are the narrow research handoff.
+# GitHub is the durable state; request/response are the narrow, single-flight research handoff.
 
 
 def connect_state():
@@ -39,6 +39,11 @@ def select_batch(con):
 
 
 def prepare():
+    # A request or response already present means a handoff is in flight.
+    # Never select another batch and never regenerate the current request.
+    if REQUEST.exists() or RESPONSE.exists():
+        return False
+
     con = connect_state()
     try:
         batch_id = select_batch(con)
