@@ -1,0 +1,52 @@
+name: Hogona GitHub SQLite Bridge
+
+on:
+  schedule:
+    - cron: '5 * * * *'
+  push:
+    paths:
+      - 'worker/response.json'
+  workflow_dispatch:
+
+concurrency:
+  group: hogona-github-state
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare exactly one batch
+        run: HOGONA_BRIDGE_MODE=prepare python worker/bridge.py
+      - name: Publish request
+        run: |
+          if [ -f worker/request.json ]; then
+            git config user.name 'hogona-worker'
+            git config user.email 'hogona-worker@users.noreply.github.com'
+            git add worker/request.json
+            if ! git diff --cached --quiet; then
+              git commit -m 'chore: publish Hogona batch request'
+              git push
+            fi
+          fi
+
+  apply:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply researched batch
+        run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
+      - name: Persist canonical state
+        run: |
+          git config user.name 'hogona-worker'
+          git config user.email 'hogona-worker@users.noreply.github.com'
+          git add data/hogona_worker_canonical_state.sql.gz.b64
+          git rm -f worker/response.json
+          git commit -m 'chore: persist Hogona batch results'
+          git push
