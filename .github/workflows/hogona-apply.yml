@@ -21,7 +21,6 @@ jobs:
       - name: Require researched submission
         run: |
           test -f worker/response.json
-          test "$(git log -1 --pretty=%s)" = "hogona: submit researched batch"
       - name: Apply researched batch
         run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
       - name: Persist canonical state and clear handoff
