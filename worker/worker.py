@@ -11,7 +11,7 @@ PA_KEYS={'description','elevation_or_height','legend_or_history','how_to_reach',
 
 
 def decode_state():
-    raw=base64.b64decode(open(STATE,'rb').read())
+    raw=base64.b64decode(open(STATE,'rb').read(),validate=True)
     sql=gzip.decompress(raw).decode('utf-8')
     con=sqlite3.connect(DB)
     con.executescript(sql)
@@ -69,8 +69,10 @@ def validate(result, inp, jid):
     return result,logical
 
 
-def apply_researched_result(con, jid, inp, result):
+def apply_researched_result(con,jid,inp,result):
     result,logical=validate(result,inp,jid)
+    row=con.execute("SELECT status FROM jobs WHERE job_id=?",(jid,)).fetchone()
+    if not row or row[0] != 'processing': raise RuntimeError(f'job {jid} is not in processing state')
     con.execute("UPDATE jobs SET output_data=?,updated_at=datetime('now') WHERE job_id=? AND status='processing'",(logical,jid)); con.commit()
     stored=con.execute("SELECT output_data FROM jobs WHERE job_id=?",(jid,)).fetchone()[0]
     parsed=json.loads(stored)
@@ -97,9 +99,25 @@ def verify_terminal_batch(con,batch_id):
         if status=='failed' and out not in (None,''): raise RuntimeError('failed with output')
 
 
+def validate_batch_response(response,request,canonical_blob_sha=None):
+    if not isinstance(response,dict) or response.get('protocol') != 1: raise ValueError('invalid response protocol')
+    if response.get('batch_id') != request.get('batch_id'): raise ValueError('batch_id mismatch')
+    if response.get('artifact_blob_sha') != request.get('artifact_blob_sha'): raise ValueError('artifact_blob_sha mismatch')
+    if canonical_blob_sha is not None and response.get('artifact_blob_sha') != canonical_blob_sha: raise ValueError('response artifact SHA is stale')
+    jobs=request.get('jobs')
+    results=response.get('results')
+    if not isinstance(jobs,list) or not isinstance(results,list): raise ValueError('request/response jobs must be lists')
+    expected=[j['job_id'] for j in jobs]
+    received=[r.get('job_id') for r in results]
+    if received != expected or len(set(received)) != len(received): raise ValueError('response does not cover exactly request jobs in order')
+    for j,r in zip(jobs,results):
+        result=r.get('result')
+        if result is not None: validate(result,j['input_data'],j['job_id'])
+    return True
+
+
 def main():
     raise SystemExit('This module is the deterministic state/validation library. The ChatGPT-side worker supplies research and invokes its functions; it intentionally has no OpenAI API dependency.')
-
 
 if __name__=='__main__':
     main()
