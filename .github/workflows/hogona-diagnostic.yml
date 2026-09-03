@@ -1,0 +1,39 @@
+name: Hogona Diagnostic
+
+on:
+  push:
+    paths:
+      - '.github/workflows/hogona-diagnostic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect canonical state and handoff
+        run: |
+          python - <<'PY'
+          import base64, gzip, sqlite3, subprocess
+          from pathlib import Path
+          raw=base64.b64decode(Path('data/hogona_worker_canonical_state.sql.gz.b64').read_bytes(), validate=True)
+          sql=gzip.decompress(raw).decode('utf-8')
+          db=sqlite3.connect(':memory:')
+          db.executescript(sql)
+          print('HEAD:', subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip())
+          print('request.json:', Path('worker/request.json').exists())
+          print('response.json:', Path('worker/response.json').exists())
+          print('job status counts:')
+          for status,n in db.execute('SELECT status, COUNT(*) FROM jobs GROUP BY status ORDER BY status'):
+              print(f'  {status}: {n}')
+          print('eligible batches:')
+          rows=db.execute("SELECT batch_id, COUNT(*) FROM jobs WHERE status IN ('exported','processing') GROUP BY batch_id ORDER BY batch_id").fetchall()
+          if rows:
+              for batch_id,n in rows: print(f'  {batch_id}: {n} eligible jobs')
+          else:
+              print('  NONE')
+          print('selected batch:', db.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND jobs.status IN ('exported','processing')) ORDER BY batch_id LIMIT 1").fetchone())
+          PY
