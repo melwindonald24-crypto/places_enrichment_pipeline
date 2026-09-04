@@ -3,11 +3,6 @@ name: Hogona Prepare Batch
 on:
   schedule:
     - cron: '5 * * * *'
-  push:
-    paths:
-      - 'worker/bridge.py'
-      - 'worker/worker.py'
-      - 'worker/request.json'
   workflow_dispatch:
 
 concurrency:
