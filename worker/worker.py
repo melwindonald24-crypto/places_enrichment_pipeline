@@ -3,7 +3,7 @@ import base64, gzip, json, os, sqlite3, sys
 DB='hogona_worker.sqlite'
 STATE='data/hogona_worker_canonical_state.sql.gz.b64'
 
-CORE='''HOGONA RESEARCH WORKER. Use only the supplied job from the single supplied batch. Verify place identity and geographic consistency. Research thoroughly using authoritative government/tourism sources first and reputable secondary sources as needed. Verify relevant access, restrictions, history, elevation/height, safety, seasonal guidance, and local-name claims. Never guess: use null when reliable evidence is unavailable and preserve credible disagreements. Preserve supplied coordinates exactly. Return exactly the schema required by this module: job_id, place_fields, planning_attributes, sources. Use valid traversability and duration, no confidence field, and source-backed narrative fields. Sources may be full URLs; validation normalizes them to hostname tokens. Build and validate the result before persistence. Do not add fields or modify canonical state directly.'''
+CORE='''HOGONA WORKER. Read only the supplied request and process only its jobs. Research each place and verify identity, geography, and relevant facts using authoritative sources where available. Preserve supplied coordinates exactly; use null when evidence is unavailable; preserve credible disagreements. Return exactly the schema defined by this module and validate every result before persistence. Do not modify canonical state directly.'''
 
 OUTPUT_KEYS={'job_id','place_fields','planning_attributes','sources'}
 PF_KEYS={'traversability','micro_region','vibe','summary','best_time','visit_duration_minutes','co_ords'}
