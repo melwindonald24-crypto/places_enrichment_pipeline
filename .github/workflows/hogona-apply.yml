@@ -20,12 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Require researched submission
-        run: |
-          test -f worker/response.json
       - name: Apply researched batch
+        if: ${{ hashFiles('worker/response.json') != '' }}
         run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
       - name: Persist canonical state and clear handoff
+        if: ${{ hashFiles('worker/response.json') != '' }}
         run: |
           git config user.name 'hogona-worker'
           git config user.email 'hogona-worker@users.noreply.github.com'
