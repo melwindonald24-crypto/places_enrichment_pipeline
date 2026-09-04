@@ -65,7 +65,6 @@ def validate(result, inp, jid):
     if filled and not normalized: raise ValueError('narrative without sources')
     result['sources']=normalized
     logical=json.dumps(result,ensure_ascii=False,separators=(',',':'))
-    if len(logical)>=1800: raise ValueError('logical JSON >= 1800 chars')
     return result,logical
 
 
