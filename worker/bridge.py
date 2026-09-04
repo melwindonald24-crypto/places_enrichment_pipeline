@@ -51,11 +51,22 @@ def prepare():
 def apply():
     if not RESPONSE.exists():
         return False
+    if not REQUEST.exists():
+        raise SystemExit('request.json missing for response handoff')
     response = json.loads(RESPONSE.read_text(encoding='utf-8'))
+    request = json.loads(REQUEST.read_text(encoding='utf-8'))
     if response.get('protocol') != 1:
         raise SystemExit('invalid response protocol')
-    if canonical_blob_sha() != response.get('artifact_blob_sha'):
+    if canonical_blob_sha() != request.get('artifact_blob_sha'):
         raise SystemExit('canonical artifact changed since request; refusing overwrite')
+    if response.get('artifact_blob_sha') != request.get('artifact_blob_sha'):
+        raise SystemExit('response artifact SHA does not match request')
+    if response.get('batch_id') != request.get('batch_id'):
+        raise SystemExit('response batch_id does not match request')
+    import importlib.util
+    spec=importlib.util.spec_from_file_location('worker',ROOT/'worker'/'worker.py')
+    worker=importlib.util.module_from_spec(spec); spec.loader.exec_module(worker)
+    worker.validate_batch_response(response,request,canonical_blob_sha())
     con = connect_state()
     try:
         batch_id = response.get('batch_id')
@@ -64,9 +75,6 @@ def apply():
         received = {r.get('job_id') for r in results} if isinstance(results,list) else set()
         if expected != received or len(received) != len(results or []):
             raise SystemExit('response does not cover exactly the selected batch')
-        import importlib.util
-        spec=importlib.util.spec_from_file_location('worker',ROOT/'worker'/'worker.py')
-        worker=importlib.util.module_from_spec(spec); spec.loader.exec_module(worker)
         con.execute('BEGIN IMMEDIATE')
         for item in results:
             jid=item['job_id']; row=con.execute('SELECT status,input_data FROM jobs WHERE job_id=?',(jid,)).fetchone()
