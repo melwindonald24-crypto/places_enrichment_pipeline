@@ -31,7 +31,6 @@ def select_batch(con):
 
 
 def prepare():
-    # Single-flight handoff: stale or in-flight files block new selection.
     if REQUEST.exists() or RESPONSE.exists():
         return False
     con = connect_state()
@@ -50,6 +49,8 @@ def prepare():
 
 
 def apply():
+    if not RESPONSE.exists():
+        return False
     response = json.loads(RESPONSE.read_text(encoding='utf-8'))
     if response.get('protocol') != 1:
         raise SystemExit('invalid response protocol')
@@ -89,9 +90,10 @@ def apply():
     finally:
         con.close()
         if DB.exists(): DB.unlink()
+    return True
 
 if __name__=='__main__':
     mode=os.environ.get('HOGONA_BRIDGE_MODE')
     if mode=='prepare': raise SystemExit(0 if prepare() else 0)
-    if mode=='apply': apply()
+    if mode=='apply': raise SystemExit(0 if apply() else 0)
     else: raise SystemExit('set HOGONA_BRIDGE_MODE=prepare|apply')
