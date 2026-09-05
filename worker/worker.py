@@ -1,4 +1,4 @@
-import base64, gzip, json, os, sqlite3, sys
+import base64, gzip, json, os, sqlite3
 
 DB='hogona_worker.sqlite'
 STATE='data/hogona_worker_canonical_state.sql.gz.b64'
@@ -81,7 +81,7 @@ def apply_researched_result(con,jid,inp,result):
 
 
 def select_one_batch(con):
-    return con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status IN ('exported','processing')) ORDER BY batch_id LIMIT 1").fetchone()
+    return con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status='exported') ORDER BY batch_id LIMIT 1").fetchone()
 
 
 def claim_job(con,jid):
@@ -105,11 +105,12 @@ def validate_batch_response(response,request,canonical_blob_sha=None):
     if canonical_blob_sha is not None and response.get('artifact_blob_sha') != canonical_blob_sha: raise ValueError('response artifact SHA is stale')
     jobs=request.get('jobs')
     results=response.get('results')
-    if not isinstance(jobs,list) or not isinstance(results,list): raise ValueError('request/response jobs must be lists')
+    if not isinstance(jobs,list) or not isinstance(results,list) or not jobs: raise ValueError('request/response jobs must be non-empty lists')
     expected=[j['job_id'] for j in jobs]
     received=[r.get('job_id') for r in results]
     if received != expected or len(set(received)) != len(received): raise ValueError('response does not cover exactly request jobs in order')
     for j,r in zip(jobs,results):
+        if j.get('status') != 'exported': raise ValueError('request job is not exported')
         result=r.get('result')
         if result is not None: validate(result,j['input_data'],j['job_id'])
     return True

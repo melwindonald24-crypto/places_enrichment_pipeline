@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Prepare exactly one batch
+      - name: Prepare exactly one exported batch
         run: HOGONA_BRIDGE_MODE=prepare python worker/bridge.py
       - name: Publish request
         run: |
