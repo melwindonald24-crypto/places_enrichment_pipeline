@@ -27,7 +27,9 @@ def canonical_blob_sha():
 
 
 def select_batch(con):
-    return con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND jobs.status IN ('exported','processing')) ORDER BY batch_id LIMIT 1").fetchone()
+    # Only unclaimed work can start a new handoff. A persisted processing row is
+    # an interrupted/invalid transaction and must never be silently re-batched.
+    return con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND jobs.status='exported') ORDER BY batch_id LIMIT 1").fetchone()
 
 
 def prepare():
@@ -39,7 +41,7 @@ def prepare():
         if not row:
             return False
         batch_id = row[0]
-        rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status IN ('exported','processing') ORDER BY job_id", (batch_id,)).fetchall()
+        rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch_id,)).fetchall()
         payload = {'protocol':1,'batch_id':batch_id,'artifact_blob_sha':canonical_blob_sha(),'jobs':[{'job_id':jid,'status':status,'input_data':json.loads(inp)} for jid,status,inp in rows]}
         REQUEST.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
         return True
@@ -74,14 +76,14 @@ def apply():
     worker.validate_batch_response(response,request,current_sha)
 
     requested_jobs = request.get('jobs')
-    if not isinstance(requested_jobs, list):
-        raise SystemExit('request jobs are not a list')
+    if not isinstance(requested_jobs, list) or not requested_jobs:
+        raise SystemExit('request jobs are not a non-empty list')
     requested_ids = [j.get('job_id') for j in requested_jobs]
     if len(set(requested_ids)) != len(requested_ids):
         raise SystemExit('request contains duplicate job IDs')
     response_ids = [r.get('job_id') for r in response.get('results', [])]
     if response_ids != requested_ids:
-        raise SystemExit('response does not cover exactly the requested jobs')
+        raise SystemExit('response does not cover exactly the requested jobs in order')
 
     con = connect_state()
     try:
@@ -95,8 +97,8 @@ def apply():
         for item, requested in zip(response['results'], requested_jobs):
             jid = item['job_id']
             row = actual.get(jid)
-            if not row or row[0] not in ('exported','processing'):
-                raise SystemExit(f'unexpected state for {jid}')
+            if not row or row[0] != 'exported':
+                raise SystemExit(f'unexpected state for {jid}: expected exported')
             if requested.get('job_id') != jid:
                 raise SystemExit(f'request ordering mismatch for {jid}')
             if requested.get('input_data') != json.loads(row[1]):
@@ -104,11 +106,13 @@ def apply():
 
             result = item.get('result')
             if result is None:
-                con.execute("UPDATE jobs SET status='failed',output_data=NULL,updated_at=datetime('now') WHERE job_id=?",(jid,))
+                con.execute("UPDATE jobs SET status='failed',output_data=NULL,updated_at=datetime('now') WHERE job_id=? AND status='exported'",(jid,))
                 continue
 
             validated,logical=worker.validate(result,json.loads(row[1]),jid)
-            con.execute("UPDATE jobs SET status='processing',output_data=NULL,updated_at=datetime('now') WHERE job_id=? AND status IN ('exported','processing')",(jid,))
+            changed = con.execute("UPDATE jobs SET status='processing',output_data=NULL,updated_at=datetime('now') WHERE job_id=? AND status='exported'",(jid,)).rowcount
+            if changed != 1:
+                raise SystemExit(f'failed to claim {jid}')
             con.execute("UPDATE jobs SET output_data=?,updated_at=datetime('now') WHERE job_id=? AND status='processing'",(logical,jid))
             stored=con.execute('SELECT output_data FROM jobs WHERE job_id=?',(jid,)).fetchone()[0]
             parsed=json.loads(stored)
@@ -140,4 +144,4 @@ if __name__=='__main__':
     mode=os.environ.get('HOGONA_BRIDGE_MODE')
     if mode=='prepare': raise SystemExit(0 if prepare() else 0)
     if mode=='apply': raise SystemExit(0 if apply() else 0)
-    else: raise SystemExit('set HOGONA_BRIDGE_MODE=prepare|apply')
+    raise SystemExit('set HOGONA_BRIDGE_MODE=prepare|apply')
