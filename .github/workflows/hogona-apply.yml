@@ -2,6 +2,7 @@ name: Hogona Apply Research
 
 on:
   push:
+    branches: [main]
     paths:
       - 'worker/response.json'
   workflow_dispatch:
@@ -28,5 +29,7 @@ jobs:
           git config user.email 'hogona-worker@users.noreply.github.com'
           git add data/hogona_worker_canonical_state.sql.gz.b64
           git rm -f worker/response.json worker/request.json
-          git commit -m 'chore: persist Hogona batch results'
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: persist Hogona batch results'
+            git push
+          fi
