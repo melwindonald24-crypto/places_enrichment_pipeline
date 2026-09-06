@@ -20,17 +20,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply researched batch
+      - name: Apply response
         if: ${{ hashFiles('worker/response.json') != '' && hashFiles('worker/request.json') != '' }}
         run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
-      - name: Persist canonical state and clear handoff
+      - name: Persist completed batch
         if: ${{ hashFiles('worker/response.json') != '' && hashFiles('worker/request.json') != '' }}
         run: |
           git config user.name 'hogona-worker'
           git config user.email 'hogona-worker@users.noreply.github.com'
           git add data/hogona_worker_canonical_state.sql.gz.b64
           git rm -f worker/response.json worker/request.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'chore: persist Hogona batch results'
-            git push
-          fi
+          git commit -m 'chore: persist Hogona batch results'
+          git push
