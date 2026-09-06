@@ -71,13 +71,15 @@ def validate(result, inp, jid):
 def apply_researched_result(con,jid,inp,result):
     result,logical=validate(result,inp,jid)
     row=con.execute("SELECT status FROM jobs WHERE job_id=?",(jid,)).fetchone()
-    if not row or row[0] != 'processing': raise RuntimeError(f'job {jid} is not in processing state')
-    con.execute("UPDATE jobs SET output_data=?,updated_at=datetime('now') WHERE job_id=? AND status='processing'",(logical,jid)); con.commit()
-    stored=con.execute("SELECT output_data FROM jobs WHERE job_id=?",(jid,)).fetchone()[0]
-    parsed=json.loads(stored)
+    if not row or row[0] != 'exported': raise RuntimeError(f'job {jid} is not in exported state')
+    cur=con.execute("UPDATE jobs SET output_data=?,status='completed',updated_at=datetime('now') WHERE job_id=? AND status='exported'",(logical,jid))
+    if cur.rowcount!=1: raise RuntimeError(f'job {jid} update failed')
+    stored=con.execute("SELECT status,output_data FROM jobs WHERE job_id=?",(jid,)).fetchone()
+    if stored[0]!='completed' or not stored[1]: raise RuntimeError('post-write verification failed')
+    parsed=json.loads(stored[1])
     if parsed!=result: raise RuntimeError('post-write verification failed')
     validate(parsed,inp,jid)
-    con.execute("UPDATE jobs SET status='completed',updated_at=datetime('now') WHERE job_id=? AND status='processing'",(jid,)); con.commit()
+    return True
 
 
 def select_one_batch(con):
@@ -103,8 +105,7 @@ def validate_batch_response(response,request,canonical_blob_sha=None):
     if response.get('batch_id') != request.get('batch_id'): raise ValueError('batch_id mismatch')
     if response.get('artifact_blob_sha') != request.get('artifact_blob_sha'): raise ValueError('artifact_blob_sha mismatch')
     if canonical_blob_sha is not None and response.get('artifact_blob_sha') != canonical_blob_sha: raise ValueError('response artifact SHA is stale')
-    jobs=request.get('jobs')
-    results=response.get('results')
+    jobs=request.get('jobs'); results=response.get('results')
     if not isinstance(jobs,list) or not isinstance(results,list) or not jobs: raise ValueError('request/response jobs must be non-empty lists')
     expected=[j['job_id'] for j in jobs]
     received=[r.get('job_id') for r in results]
@@ -112,7 +113,8 @@ def validate_batch_response(response,request,canonical_blob_sha=None):
     for j,r in zip(jobs,results):
         if j.get('status') != 'exported': raise ValueError('request job is not exported')
         result=r.get('result')
-        if result is not None: validate(result,j['input_data'],j['job_id'])
+        if result is None: raise ValueError('missing enrichment result')
+        validate(result,j['input_data'],j['job_id'])
     return True
 
 
