@@ -102,10 +102,14 @@ def apply():
     con = connect_state()
     try:
         batch_id = request.get('batch_id')
-        batch_rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? ORDER BY job_id", (batch_id,)).fetchall()
+        # Prepare snapshots only exported jobs. Apply must therefore compare
+        # the request against the canonical exported set, not every historical
+        # job in the batch. Completed/failed jobs in the same batch are already
+        # terminal and are intentionally not part of this handoff.
+        batch_rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch_id,)).fetchall()
         actual = {r[0]: (r[1], r[2]) for r in batch_rows}
         if set(actual) != set(requested_ids):
-            raise SystemExit('request job set no longer matches canonical batch')
+            raise SystemExit('request job set no longer matches canonical exported jobs')
 
         # The request was built from exported jobs. Apply may consume only
         # those exact exported rows; it may not silently complete a different
