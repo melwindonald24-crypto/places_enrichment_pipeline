@@ -1,4 +1,4 @@
-import base64, gzip, hashlib, json, os, sqlite3, tempfile
+import base64, gzip, json, os, sqlite3, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +27,6 @@ def canonical_blob_sha():
 
 
 def prepare():
-    # A handoff is a transaction boundary. Never create a second handoff.
     if REQUEST.exists() or RESPONSE.exists():
         return False
 
@@ -36,12 +35,10 @@ def prepare():
         row = con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status='exported') ORDER BY batch_id LIMIT 1").fetchone()
         if not row:
             return False
-
         batch_id = row[0]
         rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch_id,)).fetchall()
         if not rows:
             return False
-
         payload = {
             'protocol': 1,
             'batch_id': batch_id,
@@ -100,30 +97,44 @@ def apply():
     con = connect_state()
     try:
         batch_id = request.get('batch_id')
-        batch_rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch_id,)).fetchall()
-        actual = {r[0]: (r[1], r[2]) for r in batch_rows}
+        batch_rows = con.execute("SELECT job_id,status,input_data,output_data FROM jobs WHERE batch_id=? ORDER BY job_id", (batch_id,)).fetchall()
+        actual = {r[0]: (r[1], r[2], r[3]) for r in batch_rows}
         if set(actual) != set(requested_ids):
-            raise SystemExit('request job set no longer matches canonical exported jobs')
+            raise SystemExit('request job set no longer matches canonical batch')
 
         con.execute('BEGIN IMMEDIATE')
         for item, requested in zip(response['results'], requested_jobs):
             jid = item['job_id']
-            row = actual.get(jid)
-            if not row or row[0] != 'exported':
-                raise SystemExit(f'unexpected state for {jid}')
-            if requested.get('job_id') != jid:
-                raise SystemExit(f'request ordering mismatch for {jid}')
-            if requested.get('status') != 'exported':
-                raise SystemExit(f'request state is not exported for {jid}')
-            if requested.get('input_data') != json.loads(row[1]):
+            row = actual[jid]
+            status, input_data, output_data = row
+            if requested.get('job_id') != jid or requested.get('status') != 'exported':
+                raise SystemExit(f'request mismatch for {jid}')
+            if requested.get('input_data') != json.loads(input_data):
                 raise SystemExit(f'canonical input changed for {jid}')
 
             result = item.get('result')
+            if status == 'completed':
+                if result is None or output_data is None:
+                    raise SystemExit(f'completed job {jid} conflicts with response')
+                stored = json.loads(output_data)
+                validated, _ = worker.validate(result, json.loads(input_data), jid)
+                if stored != validated:
+                    raise SystemExit(f'completed job {jid} has different output')
+                continue
+
+            if status == 'failed':
+                if result is not None or output_data not in (None, ''):
+                    raise SystemExit(f'failed job {jid} conflicts with response')
+                continue
+
+            if status != 'exported':
+                raise SystemExit(f'unexpected state for {jid}: {status}')
+
             if result is None:
                 con.execute("UPDATE jobs SET status='failed',output_data=NULL,updated_at=datetime('now') WHERE job_id=? AND status='exported'", (jid,))
                 continue
 
-            validated, logical = worker.validate(result, json.loads(row[1]), jid)
+            validated, logical = worker.validate(result, json.loads(input_data), jid)
             con.execute("UPDATE jobs SET status='completed',output_data=?,updated_at=datetime('now') WHERE job_id=? AND status='exported'", (logical, jid))
             stored = con.execute('SELECT status,output_data FROM jobs WHERE job_id=?', (jid,)).fetchone()
             if stored[0] != 'completed' or not stored[1]:
@@ -131,7 +142,7 @@ def apply():
             parsed = json.loads(stored[1])
             if parsed != validated:
                 raise SystemExit(f'post-write verification failed for {jid}')
-            worker.validate(parsed, json.loads(row[1]), jid)
+            worker.validate(parsed, json.loads(input_data), jid)
 
         for jid in requested_ids:
             status, out = con.execute('SELECT status,output_data FROM jobs WHERE job_id=?', (jid,)).fetchone()
@@ -145,10 +156,6 @@ def apply():
         con.commit()
         state_bytes = canonical_bytes(con)
 
-        # Verify the exact serialized canonical artifact before replacing the
-        # repository state file. This closes the DB->artifact boundary: a batch
-        # cannot be acknowledged unless the artifact we are about to publish
-        # can be loaded and contains the terminal outputs we just validated.
         with tempfile.NamedTemporaryFile(prefix='hogona-state-', suffix='.sql.gz.b64', delete=False) as tmp:
             tmp.write(state_bytes)
             tmp_path = Path(tmp.name)
@@ -180,11 +187,9 @@ def apply():
             if tmp_path.exists():
                 tmp_path.unlink()
 
-        # Replace atomically only after the serialized artifact has passed the
-        # independent reload/validation check above.
-        STATE_TMP = STATE.with_name(STATE.name + '.tmp')
-        STATE_TMP.write_bytes(state_bytes)
-        os.replace(STATE_TMP, STATE)
+        state_tmp = STATE.with_name(STATE.name + '.tmp')
+        state_tmp.write_bytes(state_bytes)
+        os.replace(state_tmp, STATE)
     except Exception:
         con.rollback()
         raise
