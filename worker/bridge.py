@@ -96,15 +96,19 @@ def apply():
     con = connect_state()
     try:
         batch_id = request['batch_id']
-        rows = con.execute("SELECT job_id,status,input_data,output_data FROM jobs WHERE batch_id=? ORDER BY job_id", (batch_id,)).fetchall()
+        placeholders = ','.join('?' for _ in requested_ids)
+        rows = con.execute(
+            f"SELECT job_id,status,input_data,output_data FROM jobs WHERE batch_id=? AND job_id IN ({placeholders})",
+            [batch_id, *requested_ids],
+        ).fetchall()
         actual = {r[0]: r for r in rows}
         if set(actual) != set(requested_ids):
-            raise SystemExit('canonical batch does not equal request batch')
+            raise SystemExit('requested jobs are not present in canonical batch')
 
         validated_results = []
         for item, requested in zip(response['results'], requested_jobs):
             jid = item['job_id']
-            status, input_data, output_data = actual[jid][1], actual[jid][2], actual[jid][3]
+            _, status, input_data, _ = actual[jid]
             if requested.get('job_id') != jid or requested.get('status') != 'exported':
                 raise SystemExit(f'request mismatch for {jid}')
             parsed_input = json.loads(input_data)
@@ -131,13 +135,10 @@ def apply():
                 raise SystemExit(f'post-write verification failed for {jid}')
             worker.validate(parsed, parsed_input, jid)
 
-        final = con.execute("SELECT job_id,status,output_data FROM jobs WHERE batch_id=? ORDER BY job_id", (batch_id,)).fetchall()
-        selected = {jid for jid, *_ in final}
-        if selected != set(requested_ids):
-            raise SystemExit('canonical batch changed during apply')
-        for jid, status, out in final:
-            if jid in requested_ids and (status != 'completed' or not out):
-                raise SystemExit(f'batch not fully enriched for {jid}')
+        for jid, _, _, _ in validated_results:
+            status, out = con.execute('SELECT status,output_data FROM jobs WHERE job_id=?', (jid,)).fetchone()
+            if status != 'completed' or not out:
+                raise SystemExit(f'job {jid} is not fully enriched')
 
         con.commit()
         state_bytes = canonical_bytes(con)
