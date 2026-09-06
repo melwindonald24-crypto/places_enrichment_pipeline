@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Prepare exactly one exported batch
+      - name: Prepare request
         run: HOGONA_BRIDGE_MODE=prepare python worker/bridge.py
       - name: Publish request
         run: |
@@ -29,8 +29,6 @@ jobs:
             git config user.name 'hogona-worker'
             git config user.email 'hogona-worker@users.noreply.github.com'
             git add worker/request.json
-            if ! git diff --cached --quiet; then
-              git commit -m 'chore: publish Hogona batch request'
-              git push
-            fi
+            git diff --cached --quiet || git commit -m 'chore: publish Hogona batch request'
+            git push
           fi
