@@ -6,8 +6,6 @@ on:
     paths:
       - 'worker/response.json'
       - 'worker/bridge.py'
-  schedule:
-    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 concurrency:
