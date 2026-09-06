@@ -25,13 +25,14 @@ def prepare():
         return
     con = open_state()
     try:
-        batch = con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status='exported') ORDER BY batch_id LIMIT 1").fetchone()
-        if not batch:
+        row = con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status='exported') ORDER BY batch_id LIMIT 1").fetchone()
+        if not row:
             return
-        jobs = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch[0],)).fetchall()
+        batch_id = row[0]
+        jobs = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch_id,)).fetchall()
         REQUEST.write_text(json.dumps({
             'protocol': 1,
-            'batch_id': batch[0],
+            'batch_id': batch_id,
             'artifact_blob_sha': canonical_sha(),
             'jobs': [{'job_id': j, 'status': s, 'input_data': json.loads(i)} for j, s, i in jobs]
         }, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
@@ -70,10 +71,10 @@ def apply():
                 raise SystemExit('job update failed')
 
         for job in request['jobs']:
-            row = con.execute('SELECT status,output_data,input_data FROM jobs WHERE batch_id=? AND job_id=?', (request['batch_id'], job['job_id'])).fetchone()
-            if not row or row[0] != 'completed' or not row[1] or json.loads(row[2]) != job['input_data']:
+            status, output, input_data = con.execute('SELECT status,output_data,input_data FROM jobs WHERE batch_id=? AND job_id=?', (request['batch_id'], job['job_id'])).fetchone()
+            if status != 'completed' or not output or json.loads(input_data) != job['input_data']:
                 raise SystemExit('post-write verification failed')
-            worker.validate(json.loads(row[1]), job['input_data'], job['job_id'])
+            worker.validate(json.loads(output), job['input_data'], job['job_id'])
 
         con.commit()
         state = base64.b64encode(gzip.compress(('\n'.join(con.iterdump()) + '\n').encode(), 9, mtime=0))
@@ -90,10 +91,9 @@ def apply():
 
 
 if __name__ == '__main__':
-    mode = os.environ.get('HOGONA_BRIDGE_MODE')
-    if mode == 'prepare':
+    if os.environ.get('HOGONA_BRIDGE_MODE') == 'prepare':
         prepare()
-    elif mode == 'apply':
+    elif os.environ.get('HOGONA_BRIDGE_MODE') == 'apply':
         apply()
     else:
         raise SystemExit('invalid mode')
