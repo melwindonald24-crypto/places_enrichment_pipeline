@@ -1,0 +1,108 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-20b27784",
+  "artifact_blob_sha": "0ab188a2fc7b6394ebb5583399ac088c01c8d64f",
+  "results": [
+    {
+      "job_id": "2e344947-2b21-441b-8032-5639caa30362",
+      "result": {
+        "job_id": "2e344947-2b21-441b-8032-5639caa30362",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Aadumalleshwara Road, Chitradurga, Karnataka, within the Jogimatti forest landscape",
+          "vibe": "Quiet seasonal waterfall and short nature outing; most appealing after substantial monsoon rain",
+          "summary": "Himadhagiri Falls is a seasonal waterfall near Chitradurga associated with the Jogimatti forest area. Local visitor information describes it as a monsoon-dependent waterfall with a short approach from the forest road.",
+          "best_time": "June to September, especially after rainfall",
+          "visit_duration_minutes": 90,
+          "co_ords": {
+            "lat": 14.185798,
+            "lng": 76.40048
+          }
+        },
+        "planning_attributes": {
+          "description": "A seasonal waterfall attraction on the Aadumalleshwara Road side of Chitradurga, associated with the Jogimatti reserve-forest landscape.",
+          "elevation_or_height": null,
+          "legend_or_history": null,
+          "how_to_reach": "Approach from Chitradurga via Aadumalleshwara Road and the Jogimatti forest-road area; visitor listings place the waterfall near Jogimatti forest and identify Chitradurga railway station as a nearby transport point.",
+          "access_restrictions": "Access can be restricted by forest authorities during fire-risk periods; Jogimatti has previously had temporary tourist-entry bans during summer wildfire risk.",
+          "safety_notes": "Water flow is seasonal and the approach can be uneven; use care on the trail and avoid slippery edges after rain. Follow current forest-department entry restrictions.",
+          "local_name_variants": "Himadhagiri Falls; Himdgiri Jalpaat",
+          "notes": "Visitor reports describe the falls as most active after heavy rain and recommend caution on the trail. Current access conditions should be checked before travel."
+        },
+        "sources": [
+          "karnatakatourism.org",
+          "yappe.in",
+          "top-rated.online",
+          "timesofindia.indiatimes.com"
+        ]
+      }
+    },
+    {
+      "job_id": "479f43d0-c81d-448e-9770-d5485b14ff93",
+      "result": {
+        "job_id": "479f43d0-c81d-448e-9770-d5485b14ff93",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Singanamane-Lakkavalli area on the Bhadra River, Karnataka",
+          "vibe": "Scenic reservoir and dam viewpoint with a broad-water landscape; best combined with nearby Bhadra attractions",
+          "summary": "Bhadra Dam, also known as Lakkavalli Dam, is a multipurpose dam across the Bhadra River near the Bhadravathi-Tarikere area. Karnataka Tourism identifies the dam as a visitor attraction and notes views when water is released through its gates.",
+          "best_time": "October to February for generally more comfortable sightseeing; water-release periods can provide stronger dam views",
+          "visit_duration_minutes": 90,
+          "co_ords": {
+            "lat": 13.702174,
+            "lng": 75.6366
+          }
+        },
+        "planning_attributes": {
+          "description": "A major multipurpose dam and reservoir on the Bhadra River, commonly identified with Lakkavalli and the Singanamane area.",
+          "elevation_or_height": "59.13 m dam height",
+          "legend_or_history": "The Bhadra Dam project was commissioned in 1965 and serves irrigation, hydropower, drinking-water and industrial uses.",
+          "how_to_reach": "Reach the Lakkavalli-Bhadra Dam area by road from the Bhadravathi/Tarikere side; the dam lies close to Singanamane and Lakkavalli. Nearby Bhadra Reservoir attractions can be combined in the same trip.",
+          "access_restrictions": "Access around operational dam infrastructure can be controlled; remain within designated visitor areas and obey Water Resources Department or local authority instructions.",
+          "safety_notes": "Stay away from spillways, gates and restricted operational areas. Water levels and releases can change quickly, so follow local warnings and barriers.",
+          "local_name_variants": "Bhadra Dam; Lakkavalli Dam",
+          "notes": "Karnataka Tourism lists Bhadra Dam among attractions in the Bhadra area and notes that the dam offers good views when water is released through its gates."
+        },
+        "sources": [
+          "karnatakatourism.org",
+          "wikipedia.org",
+          "timesofindia.indiatimes.com"
+        ]
+      }
+    },
+    {
+      "job_id": "60df3ea3-355d-4209-9c15-14cfd3f11273",
+      "result": {
+        "job_id": "60df3ea3-355d-4209-9c15-14cfd3f11273",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Jogimatti hills and wildlife sanctuary, Chitradurga, Karnataka",
+          "vibe": "Windy, forested hill landscape with viewpoints, wildlife habitat and a cooler atmosphere than the surrounding plains",
+          "summary": "Jogimatti Forest Area is part of the Jogimatti wildlife landscape near Chitradurga. Karnataka Tourism describes Jogimatti as a hill station and wildlife sanctuary with forests, viewpoints and trekking opportunities.",
+          "best_time": "October to February for comfortable outdoor activity; the monsoon period is greener but can make access roads and trails more difficult",
+          "visit_duration_minutes": 150,
+          "co_ords": {
+            "lat": 14.172558,
+            "lng": 76.39074
+          }
+        },
+        "planning_attributes": {
+          "description": "A forested hill and wildlife area near Chitradurga, forming part of the Jogimatti Wildlife Sanctuary landscape across Chitradurga, Hiriyur and Holalkere taluks.",
+          "elevation_or_height": "Jogimatti is described by Karnataka Tourism as a hill station; recent reporting places the sanctuary area at about 3,803 ft above sea level.",
+          "legend_or_history": "The forest is associated with the Jogimatti name and has long been a protected landscape; historical reporting notes old monastic associations and a natural cave with a Shiva Linga and other idols.",
+          "how_to_reach": "Drive from Chitradurga toward the Jogimatti hill and forest area. The sanctuary begins near the city and the summit approach follows a forest road with a rocky final section.",
+          "access_restrictions": "Forest-department restrictions can be imposed during wildfire-risk periods. In February 2026, public and tourist entry was temporarily banned because of summer fire risk.",
+          "safety_notes": "Follow forest-department entry rules, avoid visiting during active fire restrictions, and take care on rocky roads and trails. Wildlife including leopards and sloth bears is reported in the sanctuary, so do not approach animals.",
+          "local_name_variants": "Jogimatti Forest; Jogimatti Wildlife Sanctuary; Jogimatti Peak",
+          "notes": "Karnataka Tourism describes Jogimatti as a nature and wildlife destination with trekking opportunities. Recent reporting confirms that seasonal access restrictions may be imposed for wildfire prevention."
+        },
+        "sources": [
+          "karnatakatourism.org",
+          "timesofindia.indiatimes.com",
+          "newindianexpress.com",
+          "yappe.in"
+        ]
+      }
+    }
+  ]
+}
