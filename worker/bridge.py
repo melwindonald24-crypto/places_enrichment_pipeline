@@ -33,8 +33,6 @@ def prepare():
 
     con = connect_state()
     try:
-        # Only exported jobs can enter a new handoff. Processing means an
-        # incomplete transaction and must never be silently reused as new work.
         row = con.execute("SELECT batch_id FROM batches WHERE EXISTS (SELECT 1 FROM jobs WHERE jobs.batch_id=batches.batch_id AND status='exported') ORDER BY batch_id LIMIT 1").fetchone()
         if not row:
             return False
@@ -102,18 +100,11 @@ def apply():
     con = connect_state()
     try:
         batch_id = request.get('batch_id')
-        # Prepare snapshots only exported jobs. Apply must therefore compare
-        # the request against the canonical exported set, not every historical
-        # job in the batch. Completed/failed jobs in the same batch are already
-        # terminal and are intentionally not part of this handoff.
         batch_rows = con.execute("SELECT job_id,status,input_data FROM jobs WHERE batch_id=? AND status='exported' ORDER BY job_id", (batch_id,)).fetchall()
         actual = {r[0]: (r[1], r[2]) for r in batch_rows}
         if set(actual) != set(requested_ids):
             raise SystemExit('request job set no longer matches canonical exported jobs')
 
-        # The request was built from exported jobs. Apply may consume only
-        # those exact exported rows; it may not silently complete a different
-        # state or a changed input.
         con.execute('BEGIN IMMEDIATE')
         for item, requested in zip(response['results'], requested_jobs):
             jid = item['job_id']
@@ -142,18 +133,58 @@ def apply():
                 raise SystemExit(f'post-write verification failed for {jid}')
             worker.validate(parsed, json.loads(row[1]), jid)
 
-        final = con.execute("SELECT job_id,status,output_data FROM jobs WHERE batch_id=? ORDER BY job_id", (batch_id,)).fetchall()
-        for jid, status, out in final:
-            if jid in requested_ids:
-                if status not in ('completed', 'failed'):
-                    raise SystemExit('selected batch is not terminal')
-                if status == 'completed' and not out:
-                    raise SystemExit('completed without output')
-                if status == 'failed' and out not in (None, ''):
-                    raise SystemExit('failed with output')
+        for jid in requested_ids:
+            status, out = con.execute('SELECT status,output_data FROM jobs WHERE job_id=?', (jid,)).fetchone()
+            if status not in ('completed', 'failed'):
+                raise SystemExit(f'selected job {jid} is not terminal')
+            if status == 'completed' and not out:
+                raise SystemExit(f'completed job {jid} has no output')
+            if status == 'failed' and out not in (None, ''):
+                raise SystemExit(f'failed job {jid} has output')
 
         con.commit()
-        STATE.write_bytes(canonical_bytes(con))
+        state_bytes = canonical_bytes(con)
+
+        # Verify the exact serialized canonical artifact before replacing the
+        # repository state file. This closes the DB->artifact boundary: a batch
+        # cannot be acknowledged unless the artifact we are about to publish
+        # can be loaded and contains the terminal outputs we just validated.
+        with tempfile.NamedTemporaryFile(prefix='hogona-state-', suffix='.sql.gz.b64', delete=False) as tmp:
+            tmp.write(state_bytes)
+            tmp_path = Path(tmp.name)
+        try:
+            check_sql = gzip.decompress(base64.b64decode(tmp_path.read_bytes(), validate=True)).decode('utf-8')
+            check_db = tempfile.NamedTemporaryFile(prefix='hogona-check-', suffix='.sqlite', delete=False)
+            check_db.close()
+            check_path = Path(check_db.name)
+            try:
+                check_con = sqlite3.connect(check_path)
+                check_con.execute('PRAGMA foreign_keys=ON')
+                check_con.executescript(check_sql)
+                for jid in requested_ids:
+                    status, out = check_con.execute('SELECT status,output_data FROM jobs WHERE job_id=?', (jid,)).fetchone()
+                    if status not in ('completed', 'failed'):
+                        raise SystemExit(f'canonical artifact verification failed for {jid}')
+                    if status == 'completed':
+                        if not out:
+                            raise SystemExit(f'canonical artifact missing output for {jid}')
+                        parsed = json.loads(out)
+                        worker.validate(parsed, json.loads(actual[jid][1]), jid)
+                    elif out not in (None, ''):
+                        raise SystemExit(f'canonical artifact has output for failed job {jid}')
+                check_con.close()
+            finally:
+                if check_path.exists():
+                    check_path.unlink()
+        finally:
+            if tmp_path.exists():
+                tmp_path.unlink()
+
+        # Replace atomically only after the serialized artifact has passed the
+        # independent reload/validation check above.
+        STATE_TMP = STATE.with_name(STATE.name + '.tmp')
+        STATE_TMP.write_bytes(state_bytes)
+        os.replace(STATE_TMP, STATE)
     except Exception:
         con.rollback()
         raise
