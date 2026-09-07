@@ -24,4 +24,4 @@ Repository: `melwindonald24-crypto/places_enrichment_pipeline`, branch `main`.
 
 9. Create `worker/response.json` once with commit message `hogona: submit researched batch`. Never modify `request.json` or canonical state.
 
-10. Re-read the committed response and validate it against the current request, `worker.py`, and canonical SHA. Success requires complete validation; otherwise report `validation/research failure`.
+10. After the response commit, stop. GitHub Actions independently validates and applies the response to canonical state. Do not require `worker/response.json` to remain present for a post-commit verification; the apply workflow may consume it immediately.
