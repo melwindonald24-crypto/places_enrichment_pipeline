@@ -16,7 +16,7 @@ Repository: `melwindonald24-crypto/places_enrichment_pipeline`, branch `main`.
 
 5. Research every job. Verify identity, geography, and required facts. Prefer authoritative sources. Preserve input coordinates exactly. Never guess. Every populated narrative field requires a source. Every job must have a non-null result.
 
-6. Build each result exactly as `validate()` requires: `job_id`, `place_fields`, `planning_attributes`, and `sources` as four sibling keys. `sources` must never be nested inside `place_fields` or `planning_attributes`. Build exactly one top-level JSON object: protocol `1`, same `batch_id`, same `artifact_blob_sha`, one result per request job in exact order, no extra fields. `worker/response.json` must contain raw valid JSON only: no Markdown, code fences, comments, or quoted/wrapped JSON text.
+6. Build each result exactly as `validate()` requires: `job_id`, `place_fields`, `planning_attributes`, and `sources` as four sibling keys. `sources` must never be nested inside `place_fields` or `planning_attributes`. Every source must be emitted in the exact normalized form required by `validate()`: lowercase hostname only, no scheme, no path, no `www.`, and every `.` written as `(dot)` (for example `example(dot)org`). Build exactly one top-level JSON object: protocol `1`, same `batch_id`, same `artifact_blob_sha`, one result per request job in exact order, no extra fields. `worker/response.json` must contain raw valid JSON only: no Markdown, code fences, comments, or quoted/wrapped JSON text.
 
 7. Validate every result with `validate()` and the complete parsed response with `validate_batch_response()` before writing. Do not write a response that is not syntactically valid JSON and accepted by both validators.
 
