@@ -22,7 +22,7 @@ jobs:
   process:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Apply response
         if: ${{ hashFiles('worker/response.json') != '' && hashFiles('worker/request.json') != '' }}
         run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
