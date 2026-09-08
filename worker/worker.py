@@ -43,10 +43,13 @@ def validate(result, inp, jid):
         if not isinstance(source, str):
             raise ValueError('source not string')
         value = source.strip().lower()
-        parsed = urlparse(value if '://' in value else 'https://' + value)
+        if '://' not in value:
+            value = 'https://' + value
+        parsed = urlparse(value)
         host = parsed.hostname or ''
         if host.startswith('www.'):
             host = host[4:]
+        host = host.replace('(dot)', '.')
         if not host:
             raise ValueError('source has no hostname')
         token = host.replace('.', '(dot)')
