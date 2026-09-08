@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'data/hogona_worker_canonical_state.sql.gz.b64'
+      - 'worker/response.json'
+      - 'worker/bridge.py'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -17,18 +19,30 @@ permissions:
   contents: write
 
 jobs:
-  prepare:
+  process:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Apply response
+        if: ${{ hashFiles('worker/response.json') != '' && hashFiles('worker/request.json') != '' }}
+        run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
+      - name: Persist completed batch
+        if: ${{ hashFiles('worker/response.json') != '' && hashFiles('worker/request.json') != '' }}
+        run: |
+          git config user.name 'hogona-worker'
+          git config user.email 'hogona-worker@users.noreply.github.com'
+          git add data/hogona_worker_canonical_state.sql.gz.b64
+          git rm -f worker/response.json worker/request.json
+          git commit -m 'chore: persist Hogona batch results'
+          git push
       - name: Prepare request
+        if: ${{ hashFiles('worker/response.json') == '' && hashFiles('worker/request.json') == '' }}
         run: HOGONA_BRIDGE_MODE=prepare python worker/bridge.py
       - name: Publish request
+        if: ${{ hashFiles('worker/request.json') != '' && hashFiles('worker/response.json') == '' }}
         run: |
-          if [ -f worker/request.json ]; then
-            git config user.name 'hogona-worker'
-            git config user.email 'hogona-worker@users.noreply.github.com'
-            git add worker/request.json
-            git diff --cached --quiet || git commit -m 'chore: publish Hogona batch request'
-            git push
-          fi
+          git config user.name 'hogona-worker'
+          git config user.email 'hogona-worker@users.noreply.github.com'
+          git add worker/request.json
+          git diff --cached --quiet || git commit -m 'chore: publish Hogona batch request'
+          git push
