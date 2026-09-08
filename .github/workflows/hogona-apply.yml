@@ -1,18 +1,7 @@
 name: Hogona Apply Research
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'worker/response.json'
-      - 'worker/bridge.py'
-  schedule:
-    - cron: '*/15 * * * *'
   workflow_dispatch:
-
-concurrency:
-  group: hogona-handoff
-  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -21,7 +10,7 @@ jobs:
   apply:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Apply response
         if: ${{ hashFiles('worker/response.json') != '' && hashFiles('worker/request.json') != '' }}
         run: HOGONA_BRIDGE_MODE=apply python worker/bridge.py
