@@ -1,0 +1,103 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-8759b300",
+  "artifact_blob_sha": "8311cb6bc8163df6b17dca6f3de9180124feb88c",
+  "results": [
+    {
+      "job_id": "0bc154c2-ccf7-4e52-9f5f-19a34ee6b495",
+      "result": {
+        "job_id": "0bc154c2-ccf7-4e52-9f5f-19a34ee6b495",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": null,
+          "vibe": null,
+          "summary": null,
+          "best_time": null,
+          "visit_duration_minutes": 60,
+          "co_ords": {
+            "lat": 13.331617,
+            "lng": 75.764854
+          }
+        },
+        "planning_attributes": {
+          "description": null,
+          "elevation_or_height": null,
+          "legend_or_history": null,
+          "how_to_reach": null,
+          "access_restrictions": null,
+          "safety_notes": null,
+          "local_name_variants": [],
+          "notes": null
+        },
+        "sources": []
+      }
+    },
+    {
+      "job_id": "69c7aa99-c8d9-4185-896a-b7b7808481df",
+      "result": {
+        "job_id": "69c7aa99-c8d9-4185-896a-b7b7808481df",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Mallandur area, Chikkamagaluru, Karnataka",
+          "vibe": "hiking and nature",
+          "summary": "Bandekallu Gudda is described as a hiking place from Chikmagalur, with trails around the Mallandur area, close to Muthodi and surrounded by coffee plantations.",
+          "best_time": null,
+          "visit_duration_minutes": 180,
+          "co_ords": {
+            "lat": 13.337633,
+            "lng": 75.66026
+          }
+        },
+        "planning_attributes": {
+          "description": "BandeKallu Gudda provides hiking trails around the Mallandur area, in close proximity to Muthodi, and is described as an interesting hiking place from Chikmagalur.",
+          "elevation_or_height": null,
+          "legend_or_history": null,
+          "how_to_reach": "Around the Mallandur area, in close proximity to Muthodi, Chikkamagaluru.",
+          "access_restrictions": null,
+          "safety_notes": null,
+          "local_name_variants": [
+            "Bandekal Gudda",
+            "Bande Kallu Gudda"
+          ],
+          "notes": null
+        },
+        "sources": [
+          "github(dot)com"
+        ]
+      }
+    },
+    {
+      "job_id": "6c344991-5f56-4787-8004-907c8f88fddb",
+      "result": {
+        "job_id": "6c344991-5f56-4787-8004-907c8f88fddb",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Chikkamagaluru district, Karnataka",
+          "vibe": "nature, trekking and photography",
+          "summary": "Kemmangundi is identified in GitHub travel data as a Malnad destination in Chikkamagaluru district associated with nature, trekking and photography.",
+          "best_time": null,
+          "visit_duration_minutes": 240,
+          "co_ords": {
+            "lat": 13.519145,
+            "lng": 75.76868
+          }
+        },
+        "planning_attributes": {
+          "description": "Kemmangundi is a nature, trekking and photography destination in the Malnad region of Chikkamagaluru district.",
+          "elevation_or_height": null,
+          "legend_or_history": null,
+          "how_to_reach": null,
+          "access_restrictions": null,
+          "safety_notes": null,
+          "local_name_variants": [
+            "Kemmannugundi"
+          ],
+          "notes": null
+        },
+        "sources": [
+          "github(dot)com"
+        ]
+      }
+    }
+  ]
+}
