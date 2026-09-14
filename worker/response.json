@@ -1,0 +1,110 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-a67c0814",
+  "artifact_blob_sha": "91cfa56fd5c63349194c2d8f16a5b21187e9f169",
+  "results": [
+    {
+      "job_id": "683f4563-9164-4aa6-acd1-1982a7ff0d25",
+      "result": {
+        "job_id": "683f4563-9164-4aa6-acd1-1982a7ff0d25",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Itagi, Kukanur taluk, Koppal district, Karnataka",
+          "vibe": "Historic Kalyana Chalukya temple with ornate Vesara architecture and stone carvings",
+          "summary": "The Mahadeva Temple at Itagi was completed in 1112 CE and is a Kalyana Chalukya Vesara-style temple built by Mahadeva, a commander of Vikramaditya VI.",
+          "best_time": null,
+          "visit_duration_minutes": 60,
+          "co_ords": {
+            "lat": 15.444911,
+            "lng": 75.96748
+          }
+        },
+        "planning_attributes": {
+          "description": "Historic and religious temple known for its detailed carvings, Navaranga, Nandimantapa, Makaratorana and garbhagudi.",
+          "elevation_or_height": "The temple is built on a six-foot foundation.",
+          "legend_or_history": "Built by Mahadeva, commander of the Kalyana Chalukya ruler Vikramaditya VI, and completed in 1112 CE. Its inscription describes it as the emperor of temples.",
+          "how_to_reach": "Nearest railway stations include Kukanur, Banapur, Bannikoppa and Koppal. By road, it is 7.5 km from Kukanoor, 27 km from Koppal via NH67 and NH367, and 46.4 km from Gadag via NH67.",
+          "access_restrictions": "No specific access restrictions are stated on the Koppal district tourism page.",
+          "safety_notes": "No specific safety warning is stated on the Koppal district tourism page.",
+          "local_name_variants": [
+            "Mahadev Temple",
+            "Mahadeva Temple"
+          ],
+          "notes": "The district tourism page identifies the site as both historic and religious and describes the temple's Vesara architecture and carved stone elements."
+        },
+        "sources": [
+          "koppal(dot)nic(dot)in"
+        ]
+      }
+    },
+    {
+      "job_id": "85b9f817-0bcb-4266-ab44-860eb546c2c7",
+      "result": {
+        "job_id": "85b9f817-0bcb-4266-ab44-860eb546c2c7",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Huligi, Koppal district, Karnataka",
+          "vibe": "Major riverside pilgrimage temple with strong festival and devotional activity",
+          "summary": "Huligemma Devi Temple in Huligi is a major North Karnataka religious site on the Tungabhadra River, with a history of around 800 years and a temple traditionally dated to the 13th century.",
+          "best_time": "April to May for the annual Huligemma Jatre; expect larger crowds during major religious days.",
+          "visit_duration_minutes": 60,
+          "co_ords": {
+            "lat": 15.304973,
+            "lng": 76.344444
+          }
+        },
+        "planning_attributes": {
+          "description": "Temple dedicated to Goddess Huligemma, regarded as another form of Renuka Yellamma Devi, located on the banks of the Tungabhadra River.",
+          "elevation_or_height": null,
+          "legend_or_history": "The Koppal district account traces the temple's history around 800 years and describes the belief that Renuka Yellamma appeared at Huligi to devotees Nagajogi and Basavajogi. The temple was built under their leadership.",
+          "how_to_reach": "Nearest railway stations include Munirabad, Hospet, Koppal and Gangavathi. By road, it is 23.2 km from Koppal via NH67 and SH130, 12.5 km from Hosapete via NH50, NH67 and SH130, and 33.8 km from Gangavathi via SH130.",
+          "access_restrictions": "No specific access restrictions are stated on the Koppal district tourism page.",
+          "safety_notes": "Crowds are especially large on Fridays, Tuesdays and full moon days; plan for heavier pedestrian and vehicle congestion on major religious occasions.",
+          "local_name_variants": [
+            "Huligemma Devi Temple",
+            "Huligemma Temple",
+            "Huligi Temple"
+          ],
+          "notes": "The temple provides free meals (Dasoha) to visiting devotees. The Huligemma Jatre is described by the district administration as lasting for a month during Agi Purnima."
+        },
+        "sources": [
+          "koppal(dot)nic(dot)in"
+        ]
+      }
+    },
+    {
+      "job_id": "9dd30d85-178d-428f-b1a4-631c00abf5e9",
+      "result": {
+        "job_id": "9dd30d85-178d-428f-b1a4-631c00abf5e9",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Koppal, Koppal district, Karnataka",
+          "vibe": "Historic hill-associated religious site with archaeological and mythological surroundings",
+          "summary": "Malemalleshwara Temple stands at the base of Malemalleshwara Hill west of Koppal and contains an Udbhava Linga. The hill also contains ancient carvings, inscriptions and other archaeological features.",
+          "best_time": null,
+          "visit_duration_minutes": 60,
+          "co_ords": {
+            "lat": 15.345628,
+            "lng": 76.12927
+          }
+        },
+        "planning_attributes": {
+          "description": "Historic and religious temple at the base of Malemalleshwara Hill, with the wider hill containing archaeological, inscriptional and mythological features.",
+          "elevation_or_height": null,
+          "legend_or_history": "The district administration associates the hill with the Mahabharata tradition of Indrakila Parvata and says Arjuna performed penance there. The temple houses an Udbhava Linga and its history is believed to trace back nearly 1,000 years.",
+          "how_to_reach": "Nearest railway stations include Hospet, Munirabad and Koppal. By road, the site is 45.8 km from Gangavathi via SH130, 30.7 km from Hosapete via NH50, NH67 and SH130, and Koppal is connected by NH50, NH67 and several state highways.",
+          "access_restrictions": "No specific access restrictions are stated on the Koppal district tourism page.",
+          "safety_notes": "The temple is at the base of Malemalleshwara Hill; visitors exploring the wider hill should take normal care on uneven rocky terrain.",
+          "local_name_variants": [
+            "Malemalleshwara Temple",
+            "Malemalleshwar Temple"
+          ],
+          "notes": "The hill includes Kamala Sarovara, an Ashokan inscription known as Palki Gundu, ancient carvings and other inscriptions."
+        },
+        "sources": [
+          "koppal(dot)nic(dot)in"
+        ]
+      }
+    }
+  ]
+}
