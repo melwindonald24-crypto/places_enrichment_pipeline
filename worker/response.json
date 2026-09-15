@@ -14,10 +14,7 @@
           "summary": "A 17th-century rocky fort built by local ruler Byre Gowda, known for panoramic views, a Shiva temple, escape routes and interconnected rainwater-harvesting rock ponds.",
           "best_time": null,
           "visit_duration_minutes": 120,
-          "co_ords": {
-            "lat": 13.676211,
-            "lng": 77.700806
-          }
+          "co_ords": {"lat": 13.676211, "lng": 77.700806}
         },
         "planning_attributes": {
           "description": "Historic hilltop fort offering views over the surrounding landscape and an easy-to-moderate hike.",
@@ -29,9 +26,7 @@
           "local_name_variants": [],
           "notes": null
         },
-        "sources": [
-          "karnatakatourism(dot)org"
-        ]
+        "sources": ["karnatakatourism(dot)org"]
       }
     },
     {
@@ -45,10 +40,7 @@
           "summary": "A seasonal waterfall near Chikkaballapur reached by a short trek from the Kethanahalli or Jangamaranahalli area; the approach can become slippery during the monsoon.",
           "best_time": "June to September",
           "visit_duration_minutes": 120,
-          "co_ords": {
-            "lat": 13.519325,
-            "lng": 77.70802
-          }
+          "co_ords": {"lat": 13.519325, "lng": 77.70802}
         },
         "planning_attributes": {
           "description": "Seasonal monsoon waterfall in the Chikkaballapur area, with a roughly 1.5–3 km approach trek after parking near the village.",
@@ -57,15 +49,10 @@
           "how_to_reach": "Travel toward Chikkaballapur via NH 44, continue toward Kethanahalli village, park near the approach and walk approximately 1.5–3 km to the falls.",
           "access_restrictions": "No formal ticketing is reported; facilities and signage are limited.",
           "safety_notes": "The trail can be slippery during the rainy season; sturdy footwear is recommended and visitors should carry water because facilities are limited.",
-          "local_name_variants": [
-            "Vivekananda Falls"
-          ],
-          "notes": "The waterfall is seasonal and is most active during the monsoon.",
+          "local_name_variants": ["Vivekananda Falls"],
+          "notes": "The waterfall is seasonal and is most active during the monsoon."
         },
-        "sources": [
-          "praveenmusafir(dot)com",
-          "karnatakaexplore(dot)com"
-        ]
+        "sources": ["praveenmusafir(dot)com", "karnatakaexplore(dot)com"]
       }
     },
     {
@@ -79,10 +66,7 @@
           "summary": "A prominent hill destination known for sunrise views, historic fort remains, temples, viewpoints and cooler weather above the surrounding plains.",
           "best_time": "September to February",
           "visit_duration_minutes": 180,
-          "co_ords": {
-            "lat": 13.370418,
-            "lng": 77.68443
-          }
+          "co_ords": {"lat": 13.370418, "lng": 77.68443}
         },
         "planning_attributes": {
           "description": "Nandi Hills is a historic hill destination in Chikkaballapur district with panoramic viewpoints, sunrise views, fort remains and ancient temples.",
@@ -91,15 +75,10 @@
           "how_to_reach": "Nandi Hills is approximately 60 km from Bengaluru and can be reached by private vehicle, taxi or bus toward Chikkaballapur followed by road access to the hill.",
           "access_restrictions": "Karnataka Tourism lists entry hours of approximately 6:00 AM to 6:00 PM on its attraction guide.",
           "safety_notes": "Weekend crowds can be heavy; monsoon roads can be slippery, so visitors should take care on the approach and carry water for trekking.",
-          "local_name_variants": [
-            "Nandi Durga",
-            "Nandidurga"
-          ],
-          "notes": "Tipu's Drop is a prominent historic viewpoint on the hill.",
+          "local_name_variants": ["Nandi Durga", "Nandidurga"],
+          "notes": "Tipu's Drop is a prominent historic viewpoint on the hill."
         },
-        "sources": [
-          "karnatakatourism(dot)org"
-        ]
+        "sources": ["karnatakatourism(dot)org"]
       }
     }
   ]
