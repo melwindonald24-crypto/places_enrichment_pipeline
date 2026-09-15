@@ -1,0 +1,106 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-c189d724",
+  "artifact_blob_sha": "3ab9e4e062e7f866ba42b2abacc335a1ed6bdd18",
+  "results": [
+    {
+      "job_id": "34a19804-201c-484a-86f1-863ece023364",
+      "result": {
+        "job_id": "34a19804-201c-484a-86f1-863ece023364",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Gudibande, Chikkaballapur district, Karnataka",
+          "vibe": "historic hill fort with panoramic views",
+          "summary": "A 17th-century rocky fort built by local ruler Byre Gowda, known for panoramic views, a Shiva temple, escape routes and interconnected rainwater-harvesting rock ponds.",
+          "best_time": null,
+          "visit_duration_minutes": 120,
+          "co_ords": {
+            "lat": 13.676211,
+            "lng": 77.700806
+          }
+        },
+        "planning_attributes": {
+          "description": "Historic hilltop fort offering views over the surrounding landscape and an easy-to-moderate hike.",
+          "elevation_or_height": null,
+          "legend_or_history": "Gudibande Fort dates to the 17th century and was built by local ruler Byre Gowda. The fort includes a Shiva temple, escape routes and 19 interconnected rock ponds that harvested rainwater.",
+          "how_to_reach": "Gudibande is reachable by road from Bengaluru; Karnataka Tourism notes frequent government buses and taxis from Gowribidanur, with Gowribidanur as the nearest railway station.",
+          "access_restrictions": null,
+          "safety_notes": "There are no shops or facilities near the fort; carry water and other essentials.",
+          "local_name_variants": [],
+          "notes": null
+        },
+        "sources": [
+          "karnatakatourism(dot)org"
+        ]
+      }
+    },
+    {
+      "job_id": "84ab14fb-4318-45f4-a7d8-bd246cc94e5c",
+      "result": {
+        "job_id": "84ab14fb-4318-45f4-a7d8-bd246cc94e5c",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Kethanahalli, Chikkaballapur district, Karnataka",
+          "vibe": "quiet seasonal waterfall and short nature trek",
+          "summary": "A seasonal waterfall near Chikkaballapur reached by a short trek from the Kethanahalli or Jangamaranahalli area; the approach can become slippery during the monsoon.",
+          "best_time": "June to September",
+          "visit_duration_minutes": 120,
+          "co_ords": {
+            "lat": 13.519325,
+            "lng": 77.70802
+          }
+        },
+        "planning_attributes": {
+          "description": "Seasonal monsoon waterfall in the Chikkaballapur area, with a roughly 1.5–3 km approach trek after parking near the village.",
+          "elevation_or_height": "approximately 90 ft",
+          "legend_or_history": null,
+          "how_to_reach": "Travel toward Chikkaballapur via NH 44, continue toward Kethanahalli village, park near the approach and walk approximately 1.5–3 km to the falls.",
+          "access_restrictions": "No formal ticketing is reported; facilities and signage are limited.",
+          "safety_notes": "The trail can be slippery during the rainy season; sturdy footwear is recommended and visitors should carry water because facilities are limited.",
+          "local_name_variants": [
+            "Vivekananda Falls"
+          ],
+          "notes": "The waterfall is seasonal and is most active during the monsoon.",
+        },
+        "sources": [
+          "praveenmusafir(dot)com",
+          "karnatakaexplore(dot)com"
+        ]
+      }
+    },
+    {
+      "job_id": "bfdbbee8-4d10-417c-a5b1-b6f1ce97d808",
+      "result": {
+        "job_id": "bfdbbee8-4d10-417c-a5b1-b6f1ce97d808",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Nandi Hills, Chikkaballapur district, Karnataka",
+          "vibe": "scenic historic hill destination with sunrise views",
+          "summary": "A prominent hill destination known for sunrise views, historic fort remains, temples, viewpoints and cooler weather above the surrounding plains.",
+          "best_time": "September to February",
+          "visit_duration_minutes": 180,
+          "co_ords": {
+            "lat": 13.370418,
+            "lng": 77.68443
+          }
+        },
+        "planning_attributes": {
+          "description": "Nandi Hills is a historic hill destination in Chikkaballapur district with panoramic viewpoints, sunrise views, fort remains and ancient temples.",
+          "elevation_or_height": "1,478 meters (4,849 ft) above sea level",
+          "legend_or_history": "Nandi Hills was historically known as Nandidurga/Nandi Durga. The area has associations with the Ganga, Chola and Vijayanagara periods, and Tipu Sultan used the hills as a summer retreat and developed a strategic fortress.",
+          "how_to_reach": "Nandi Hills is approximately 60 km from Bengaluru and can be reached by private vehicle, taxi or bus toward Chikkaballapur followed by road access to the hill.",
+          "access_restrictions": "Karnataka Tourism lists entry hours of approximately 6:00 AM to 6:00 PM on its attraction guide.",
+          "safety_notes": "Weekend crowds can be heavy; monsoon roads can be slippery, so visitors should take care on the approach and carry water for trekking.",
+          "local_name_variants": [
+            "Nandi Durga",
+            "Nandidurga"
+          ],
+          "notes": "Tipu's Drop is a prominent historic viewpoint on the hill.",
+        },
+        "sources": [
+          "karnatakatourism(dot)org"
+        ]
+      }
+    }
+  ]
+}
