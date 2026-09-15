@@ -21,65 +21,7 @@ def open_state():
 
 
 def load_json(path):
-    text = path.read_text(encoding='utf-8')
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError as first_error:
-        repaired = _repair_structural_delimiters(text)
-        if repaired is None:
-            raise first_error
-        try:
-            value = json.loads(repaired)
-        except json.JSONDecodeError:
-            raise first_error
-        print(f'Accepted structurally repaired JSON from {path.name}; original parser error at char {first_error.pos}')
-        return value
-
-
-def _repair_structural_delimiters(text):
-    out = []
-    stack = []
-    in_string = False
-    escape = False
-
-    for ch in text:
-        if in_string:
-            out.append(ch)
-            if escape:
-                escape = False
-            elif ch == '\\':
-                escape = True
-            elif ch == '"':
-                in_string = False
-            continue
-
-        if ch == '"':
-            in_string = True
-            out.append(ch)
-        elif ch in '{[':
-            stack.append(ch)
-            out.append(ch)
-        elif ch in '}]':
-            wanted = '{' if ch == '}' else '['
-            if not stack:
-                return None
-            while stack and stack[-1] != wanted:
-                out.append('}' if stack[-1] == '{' else ']')
-                stack.pop()
-            if not stack:
-                return None
-            stack.pop()
-            out.append(ch)
-        else:
-            out.append(ch)
-
-    if in_string or escape:
-        return None
-    while stack:
-        out.append('}' if stack[-1] == '{' else ']')
-        stack.pop()
-    candidate = ''.join(out)
-    return candidate if candidate != text else None
+    return json.loads(path.read_text(encoding='utf-8'))
 
 
 def prepare():
