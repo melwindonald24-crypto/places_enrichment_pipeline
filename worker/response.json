@@ -1,0 +1,36 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-af3a98fe",
+  "artifact_blob_sha": "3705e1a2f12c758a5b998656ed0aaf8bed808d49",
+  "results": [
+    {
+      "job_id": "27a11484-b060-4275-be8c-e2ad7dd1f8a8",
+      "result": {
+        "job_id": "27a11484-b060-4275-be8c-e2ad7dd1f8a8",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": null,
+          "vibe": null,
+          "summary": null,
+          "best_time": null,
+          "visit_duration_minutes": 60,
+          "co_ords": {
+            "lat": 15.332954,
+            "lng": 76.46152
+          }
+        },
+        "planning_attributes": {
+          "description": null,
+          "elevation_or_height": null,
+          "legend_or_history": null,
+          "how_to_reach": null,
+          "access_restrictions": null,
+          "safety_notes": null,
+          "local_name_variants": [],
+          "notes": null
+        },
+        "sources": []
+      }
+    }
+  ]
+}
