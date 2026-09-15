@@ -1,0 +1,117 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-b5b8fb72",
+  "artifact_blob_sha": "b6056e5321a61cc77a88d69af8e873c0630ddf16",
+  "results": [
+    {
+      "job_id": "0cbd9bb2-ede5-4379-9439-3d5595291fb3",
+      "result": {
+        "job_id": "0cbd9bb2-ede5-4379-9439-3d5595291fb3",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Ramanagara district, Karnataka",
+          "vibe": "peaceful, offbeat hill trek with broad views of surrounding Ramanagara hillocks",
+          "summary": "Yathiraja Swamy Betta is a short, relatively easy hill trek near Ibbalakahalli with rocky formations, a small cave near the top, and wide views across the surrounding hills.",
+          "best_time": "early morning; cooler conditions and clearer views are preferable",
+          "visit_duration_minutes": 90,
+          "co_ords": {
+            "lat": 12.789408,
+            "lng": 77.27618
+          }
+        },
+        "planning_attributes": {
+          "description": "A short hike in the Ramanagara area described as fairly easy and peaceful, with varied rock formations and 360-degree views of nearby hills.",
+          "elevation_or_height": null,
+          "legend_or_history": null,
+          "how_to_reach": "Road approach from Bengaluru via Bidadi and Dharapura toward Yathiraja Swamy Betta; the attraction is in Ibbalakahalli, Karnataka 562159.",
+          "access_restrictions": null,
+          "safety_notes": "The summit includes rocky terrain and an exposed viewpoint; use care on steep or near-vertical sections and carry water.",
+          "local_name_variants": [
+            "Yathiraja Swamy Betta",
+            "Yathirajaswamy Betta",
+            "Yetiraja Swamy Betta",
+            "Kote Betta"
+          ],
+          "notes": "Recent trek reporting describes the ascent as easy and the surroundings as quiet, with strong views across the Ramanagara hills."
+        },
+        "sources": [
+          "theloapers(dot)com",
+          "yappe(dot)in",
+          "trip(dot)com"
+        ]
+      }
+    },
+    {
+      "job_id": "198970be-3a98-4cfa-a9be-3d176c798fb8",
+      "result": {
+        "job_id": "198970be-3a98-4cfa-a9be-3d176c798fb8",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Ramanagara district, Karnataka",
+          "vibe": "quiet, lesser-known hill fort trek with rocky terrain and panoramic valley views",
+          "summary": "Thalavadi Betta Fort is a lesser-known hill fort reached by a short trek through rocky and forested sections, with old fort remains at the summit and views toward Thimmappana Betta.",
+          "best_time": "early morning or late afternoon; daylight is recommended for the rocky summit section",
+          "visit_duration_minutes": 60,
+          "co_ords": {
+            "lat": 12.789635,
+            "lng": 77.23152
+          }
+        },
+        "planning_attributes": {
+          "description": "The route starts with an easy walk around the hill and ascends through rocky and forested stretches to ruined fort walls and the summit.",
+          "elevation_or_height": null,
+          "legend_or_history": "Remains of an old hill fort are present near the summit.",
+          "how_to_reach": "Approach from Bengaluru through Kanakapura, Kollegala and Thalavadi toward the hill; the final road to the trailhead is narrow and uneven.",
+          "access_restrictions": "Open access with no permit reported by the trail source.",
+          "safety_notes": "The final summit section has steep rock-cut steps and requires careful footing; descent can be harder than ascent. The last road section can be slippery after rain.",
+          "local_name_variants": [
+            "Thimmappana Betta"
+          ],
+          "notes": "The fort summit provides a view of Thimmappana Betta, also described as the Twin Peaks or Jodi Bande."
+        },
+        "sources": [
+          "bengalurutrails(dot)com",
+          "trekentrip(dot)com",
+          "yappe(dot)in"
+        ]
+      }
+    },
+    {
+      "job_id": "4f0f1571-e96d-41ca-9954-9bccd75bd18a",
+      "result": {
+        "job_id": "4f0f1571-e96d-41ca-9954-9bccd75bd18a",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Ramanagara district, Karnataka",
+          "vibe": "scenic, short hill trek combining rocky formations, caves, shrines and open rural views",
+          "summary": "Kunagalu Betta is a hill trek near Kunagalu village featuring granite and rocky sections, caves, small shrines and a summit with wide views over surrounding fields, hills and the Arkavathi valley.",
+          "best_time": "post-monsoon or early morning/late afternoon for cooler walking conditions and clearer views",
+          "visit_duration_minutes": 150,
+          "co_ords": {
+            "lat": 12.689018,
+            "lng": 77.31785
+          }
+        },
+        "planning_attributes": {
+          "description": "The trail combines a motorable lower track with footpaths through boulders and a cave passage, followed by rocky sections and a summit viewpoint.",
+          "elevation_or_height": "approximately 867–890 metres",
+          "legend_or_history": null,
+          "how_to_reach": "Reach Ramanagara from Bengaluru via Mysore Road/NH275, then continue toward Kunagalu village and the trek base; local directions may be useful because signage can be limited.",
+          "access_restrictions": "No prior permit is reported as required; open access is reported by the trail source.",
+          "safety_notes": "Expect rocky and cave sections and some steep portions; use care on uneven ground. The final approach road can be narrow and rough, and vehicle parking should be handled near the designated/base area.",
+          "local_name_variants": [
+            "Koonagal Betta",
+            "Puppy Betta"
+          ],
+          "notes": "The summit area is associated with a distinctive puppy-face rock formation and small religious structures."
+        },
+        "sources": [
+          "bengalurutrails(dot)com",
+          "indiahikes(dot)com",
+          "solopassport(dot)com",
+          "aranyaadventure(dot)com"
+        ]
+      }
+    }
+  ]
+}
