@@ -1,0 +1,85 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-e54c7e6b",
+  "artifact_blob_sha": "6a90021759e2aabfaa19093210cad84b6ba67e12",
+  "results": [
+    {
+      "job_id": "0efb8258-6253-48ca-883b-342304eddcfd",
+      "result": {
+        "job_id": "0efb8258-6253-48ca-883b-342304eddcfd",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Cauvery Wildlife Sanctuary, Karnataka",
+          "vibe": "riverine wilderness, dry deciduous forest and adventure",
+          "summary": "A large protected landscape along the Cauvery River in Karnataka, noted for riverine habitats, wildlife, birdwatching and permitted adventure activities such as trekking and rafting.",
+          "best_time": "November to March",
+          "visit_duration_minutes": 180,
+          "co_ords": {"lat": 12.284639, "lng": 77.430885}
+        },
+        "planning_attributes": {
+          "description": "Cauvery Wildlife Sanctuary spans the Cauvery river corridor across parts of Mandya, Chamarajanagar and Ramanagara districts and supports diverse dry deciduous, thorn and riverine habitats.",
+          "elevation_or_height": "The sanctuary has a broad elevation range; Ponnachi Betta is among its high points.",
+          "legend_or_history": "Established in 1987 as a wildlife sanctuary and subsequently expanded; it is named for the Cauvery River that runs through the protected landscape.",
+          "how_to_reach": "Road access is available from Karnataka towns including Kanakapura; tourism facilities and activity bases include Bheemeshwari, Galibore and Doddamakali.",
+          "access_restrictions": "Wildlife activities and angling require applicable permits/bookings; access can be restricted according to forest and wildlife-management rules.",
+          "safety_notes": "Use authorized guides/operators for forest and river activities, follow wildlife regulations, and exercise caution around river currents and remote forest terrain.",
+          "local_name_variants": ["Kaveri Wildlife Sanctuary", "Cauvery Wildlife Sanctuary"],
+          "notes": "Known for grizzled giant squirrel habitat, mahseer fish and more than 200 recorded bird species; rafting, coracle rides and trekking are offered in designated areas."
+        },
+        "sources": ["karnatakatourism(dot)org"]
+      }
+    },
+    {
+      "job_id": "833422ff-ed4c-4405-bc35-28234b50d9da",
+      "result": {
+        "job_id": "833422ff-ed4c-4405-bc35-28234b50d9da",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Bandipur Tiger Reserve, southern Karnataka",
+          "vibe": "dry-deciduous tiger and elephant landscape",
+          "summary": "A major tiger reserve in southern Karnataka forming part of the Nilgiri Biosphere landscape, with rich populations of tigers, elephants and other wildlife and established safari tourism.",
+          "best_time": "October to February for cooler weather and good visibility; March to May can also provide strong wildlife-viewing opportunities.",
+          "visit_duration_minutes": 180,
+          "co_ords": {"lat": 11.665895, "lng": 76.62979}
+        },
+        "planning_attributes": {
+          "description": "Bandipur Tiger Reserve lies in Mysuru and Chamarajanagar districts and forms an ecological link with adjoining protected forests in Tamil Nadu and Kerala.",
+          "elevation_or_height": "The reserve occupies the foothills and surrounding landscape of the Nilgiris; its terrain includes dry-deciduous forests and scrub.",
+          "legend_or_history": "The forest was historically a Mysore Maharaja game reserve, became a Project Tiger reserve in the 1970s and is part of the Nilgiri Biosphere Reserve.",
+          "how_to_reach": "Bandipur is on the Mysuru-Ooty highway and is accessible by road from Mysuru, with safari operations from designated forest and tourism facilities.",
+          "access_restrictions": "Entry and safari movement are controlled by the forest authorities; jeep and bus safaris operate in designated time slots and areas.",
+          "safety_notes": "Do not leave designated vehicles or approach wildlife; follow safari staff instructions and forest rules, especially around elephants and predators.",
+          "local_name_variants": ["Bandipura Wildlife Sanctuary", "Bandipur National Park", "Bandipur Tiger Reserve"],
+          "notes": "The reserve is recognized by NTCA as a tiger reserve with a core area of 872.24 sq km and total tiger-reserve extent of about 1456.3 sq km."
+        },
+        "sources": ["karnatakatourism(dot)org", "ntca(dot)gov(dot)in"]
+      }
+    },
+    {
+      "job_id": "ec819624-cbee-4450-a15d-0c4fbbc2eb5d",
+      "result": {
+        "job_id": "ec819624-cbee-4450-a15d-0c4fbbc2eb5d",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Mudumalai Tiger Reserve, Nilgiris, Tamil Nadu",
+          "vibe": "Nilgiri forest, elephant corridor and tiger habitat",
+          "summary": "A protected forest landscape on the northwestern Nilgiris at the Karnataka-Kerala-Tamil Nadu junction, known for elephants, tigers, gaur, leopards and rich birdlife.",
+          "best_time": "Year-round for general visits; early morning and late afternoon are especially suitable for wildlife viewing.",
+          "visit_duration_minutes": 180,
+          "co_ords": {"lat": 11.562277, "lng": 76.53452}
+        },
+        "planning_attributes": {
+          "description": "Mudumalai Tiger Reserve occupies the Nilgiris landscape in Tamil Nadu and connects ecologically with protected areas in Karnataka and Kerala.",
+          "elevation_or_height": "The reserve lies on the slopes of the Nilgiris and descends toward the Mysore plateau; the core area covers 321 sq km.",
+          "legend_or_history": "Part of the forest has been protected since 1940; it became part of the Nilgiri Biosphere Reserve in 1986 and was declared a tiger reserve in 2007.",
+          "how_to_reach": "The reserve straddles the Mysore-Ooty interstate highway and can be approached from Mysuru or Ooty; Theppakadu is a principal visitor and safari base.",
+          "access_restrictions": "Safaris and other visitor activities are subject to Forest Department rules, designated areas and booking/permit requirements; timings can vary seasonally.",
+          "safety_notes": "Stay with authorized safari operations, follow forest instructions, and maintain safe distances from wildlife; forest roads can be steep and conditions can change with weather.",
+          "local_name_variants": ["Mudumalai National Park", "Mudumalai Wildlife Sanctuary", "Mudumalai Tiger Reserve"],
+          "notes": "The core/critical tiger habitat is 321 sq km and the notified buffer adds 367.586 sq km, for a total tiger-reserve area of 688.586 sq km."
+        },
+        "sources": ["mudumalaitigerreserve(dot)com", "mee-tr(dot)wii(dot)gov(dot)in", "incredibleindia(dot)gov(dot)in"]
+      }
+    }
+  ]
+}
