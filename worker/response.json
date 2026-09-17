@@ -1,0 +1,85 @@
+{
+  "protocol": 1,
+  "batch_id": "batch-2026-08-21-f5b64ae6",
+  "artifact_blob_sha": "fc6c6839c557562c919e12d68d4be5c662a716cd",
+  "results": [
+    {
+      "job_id": "42fe9258-e2f8-4b84-8027-bb0f9036dd7b",
+      "result": {
+        "job_id": "42fe9258-e2f8-4b84-8027-bb0f9036dd7b",
+        "place_fields": {
+          "traversability": "moderate",
+          "micro_region": "Antaragange hill, Kolar",
+          "vibe": "adventure, caves, hill views",
+          "summary": "Rocky hill destination combining the Sri Kashi Vishweshwara temple area, natural caves and hilltop views near Kolar.",
+          "best_time": "early morning; avoid peak daytime heat and heavy rain",
+          "visit_duration_minutes": 180,
+          "co_ords": {"lat": 13.142339, "lng": 78.10073}
+        },
+        "planning_attributes": {
+          "description": "Antaragange is a hill and cave destination near Kolar, known for its rocky terrain, caves and the sacred spring associated with the temple.",
+          "elevation_or_height": "about 1,226 m above sea level for Antaragange hill",
+          "legend_or_history": "The site is associated with the Sri Kashi Vishweshwara temple and a spring emerging through a stone Nandi; Antaragange is commonly described as 'Ganges from the deep'.",
+          "how_to_reach": "Reach via Kolar/Vibhuthipura; the cave-and-water point is on the Antharagange to Village Trail. The approach includes a steep stair/rocky climb.",
+          "access_restrictions": "Cave exploration can involve narrow passages; use a guide where required and check current trekking/booking requirements before travel.",
+          "safety_notes": "Rocky and steep sections require care; carry water and suitable footwear. Caves can be slippery, especially in wet weather; monkeys are reported around the temple/approach.",
+          "local_name_variants": ["Antaragange", "Antharagange", "Antargange"],
+          "notes": "A half-day visit is generally suitable for the temple, climb, caves and viewpoints."
+        },
+        "sources": ["localguidesconnect(dot)com", "wanderlog(dot)com", "tripadvisor(dot)com"]
+      }
+    },
+    {
+      "job_id": "6eb1665a-b1dd-4872-8a45-037a8f4ee72d",
+      "result": {
+        "job_id": "6eb1665a-b1dd-4872-8a45-037a8f4ee72d",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Kendatti Gollahalli, Kolar district",
+          "vibe": "quiet, local hiking",
+          "summary": "A mapped hiking-area point on the Bengaluru–Tirupati Highway near Kendatti Gollahalli; detailed attraction information is limited in the verified source.",
+          "best_time": "early morning or late afternoon",
+          "visit_duration_minutes": 60,
+          "co_ords": {"lat": 13.137372, "lng": 78.01426}
+        },
+        "planning_attributes": {
+          "description": "Kolar Trekking Points Uno is listed as a hiking area at 42P7+WPR, Bengaluru–Tirupati Highway, Kendatti Gollahalli, Karnataka 563133.",
+          "elevation_or_height": "not established from the verified source",
+          "legend_or_history": "No reliable historical or legendary information was established from the verified source.",
+          "how_to_reach": "The verified listing places it at 42P7+WPR on the Bengaluru–Tirupati Highway near Kendatti Gollahalli.",
+          "access_restrictions": "No specific access restriction was established from the verified source.",
+          "safety_notes": "Use normal hiking precautions and confirm local access conditions before entering trails.",
+          "local_name_variants": [],
+          "notes": "Detailed trail length, elevation and facilities were not established from the available verified listing; avoid inferring them from the name alone."
+        },
+        "sources": ["trip(dot)com"]
+      }
+    },
+    {
+      "job_id": "dad7fae5-6e28-45ca-8afd-fbabcc7d9aa5",
+      "result": {
+        "job_id": "dad7fae5-6e28-45ca-8afd-fbabcc7d9aa5",
+        "place_fields": {
+          "traversability": "easy",
+          "micro_region": "Thera Halli / Kondarajanahalli, Kolar district",
+          "vibe": "scenic, hilltop, sunrise/sunset",
+          "summary": "A hilltop viewpoint around Thera Halli in Kolar district, used for panoramic views and short leisure stops.",
+          "best_time": "early morning or late afternoon",
+          "visit_duration_minutes": 60,
+          "co_ords": {"lat": 13.13271, "lng": 78.10245}
+        },
+        "planning_attributes": {
+          "description": "Theralli View Point is a hill-station/viewpoint listing at 44M2+3XP, Kolar, Karnataka 563101.",
+          "elevation_or_height": "not established from the verified source",
+          "legend_or_history": "Local travel coverage describes Thera Halli as a village atop the Antaragange hill area and notes an old Lord Shiva temple on the hill.",
+          "how_to_reach": "The verified listing places the viewpoint at 44M2+3XP, Kolar, near Thera Halli/Kondarajanahalli.",
+          "access_restrictions": "No specific ticket or access restriction was established from the verified sources.",
+          "safety_notes": "Use care at exposed viewpoints and on uneven hill terrain; visibility and road conditions can vary with weather.",
+          "local_name_variants": ["Theralli View Point", "Thera Halli"],
+          "notes": "Best treated as a short viewpoint stop rather than assuming a long trek from the listing alone."
+        },
+        "sources": ["top-rated(dot)online", "trip(dot)com", "qualitylifestyle(dot)in"]
+      }
+    }
+  ]
+}
